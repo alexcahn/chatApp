@@ -66,21 +66,35 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
 
-    $('form').submit(() => {
-      let msg = $('#m').val();
-      socket.emit('message', { msg, room });
-      $('#m').val('');
-      return false;
-    });
+    function startChatting() {
+      var person = prompt("Please enter your name");
+      if (!person) {
+        alert("please enter a username")
+        startChatting()
+      }
+      else if (person != null) {
+        const room = 'Baseball';
 
-    socket.on('connect', () => {
-      // emiting to everybody
-      socket.emit('join', { room: room });
-    })
+        const socket = io('/sports');
+        $('form').submit(() => {
+          let msg = person + ": " + $('#m').val()
+          socket.emit('message', { msg, room });
+          $('#m').val('')
+          return false
+        });
 
-    socket.on('message', (msg) => {
-      $('#messages').append($('<li>').text(msg));
-    })
+        socket.on('connect', () => {
+          // emiting to everybody using the message event, user connected appears in actual html
+          socket.emit('join', { room: room, person: person })
+        })
+
+        socket.on('message', (msg) => {
+          $('#messages').append($('<li>').text(msg));
+        })
+      }
+    }
+
+    startChatting()
 
   </script>
 </body>
