@@ -1,11 +1,7 @@
 const app = require('express')();
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-const port = 3000;
-
-app.listen(process.env.PORT || 3000, function () {
-    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-});
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html')
@@ -47,3 +43,7 @@ sports.on('connection', (socket) => {
         sports.emit('message', 'user disconnected')
     })
 })
+
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
+});
