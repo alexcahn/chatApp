@@ -12,18 +12,24 @@
 
 <body>
 
-  <div class="media-body">
-    <ul id="messages"></ul>
-  </div>
-  <form action="">
-    <div class="input-group">
-      <input id="m" autocomplete="off" type="text" class="form-control" placeholder="Message..."
-        aria-label="Message...">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary" type="submit">Send</button>
-      </span>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="messages"></div>
     </div>
-  </form>
+    <div class="row">
+      <div class="col-lg-6">
+        <form action="">
+          <div class="input-group">
+            <input id="m" autocomplete="off" type="text" class="form-control" placeholder="Message..."
+              aria-label="Message...">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Send</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -62,7 +68,7 @@
         })
 
         socket.on('message', (msg) => {
-          $('#messages').append($('<li>').text(msg));
+          $('#messages').append($('<p>').text(msg));
         })
       }
     }
